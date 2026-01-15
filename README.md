@@ -31,7 +31,7 @@ By default, this script clones and prepares the following essential nodes:
 4. **Wait**: The script will download approximately 3-5GB of dependencies (PyTorch, Python, etc.).
 5. **Launch**: Once finished, use the generated path to start ComfyUI:
 ```bash
-python_embeded\python.exe -s ComfyUI\main.py --windows-standalone-build
+.\python_embeded\python.exe -s ComfyUI\main.py --windows-standalone-build
 ```
 
 ## 🔧 Technical Notes
