@@ -1,49 +1,48 @@
-# ComfyUI-Advanced-Installer
+# ⚡ ComfyUI Advanced Installer
 
-A high-performance, **one-click deployment script** for ComfyUI on Windows. This repository provides a fully portable, "embedded" environment using **Python 3.13.9** and **CUDA 13.0**, optimized for the latest generation of AI models.
+Get a pro-grade, portable ComfyUI environment in one click. Optimized for **Python 3.13**, **CUDA 13**, and **SageAttention** for maximum speed on Windows.
 
-## 🚀 Features
+### 🚀 Why use this?
 
-* **Zero Manual Setup**: Automates the download of Python, Pip, and Git dependencies.
-* **Python 3.13 Ready**: Pre-patched to support Python 3.13, including headers and libraries for complex wheels.
-* **High-Performance Libraries**:
-* **Triton for Windows**: Pre-configured for faster kernels.
-* **SageAttention**: Integrated for cutting-edge attention optimization.
-* **Insightface**: Includes custom wheels compatible with Python 3.13.
-* **Portable**: Everything is contained within the folder—no system-wide environment variables required.
+* **Faster:** Pre-configured with Triton and SageAttention for 30/40-series GPUs.
+* **Cleaner:** Portable "embedded" install. Everything stays inside one folder. It won't touch your system Python.
+* **Modern:** Uses Python 3.13 and the newest CUDA 13.0 drivers.
+* **Pre-Loaded:** Only includes the **barebone essentials** required for professional workflows: (Manager, IPAdapter, Impact Pack, etc.).
 
-## 🛠️ Included Custom Nodes
+## 🛠️ Quick Start (Newbies Read This!)
 
-By default, this script clones and prepares the following essential nodes:
+1. **Install Git:** Download and install [Git for Windows](https://git-scm.com/) (required to download the nodes).
+2. **Download the Script:** **[Download the Latest Release](https://github.com/the3minutenode/ComfyUI-Advanced-Installer/releases/latest)**. Put it in a folder where you want ComfyUI to live (e.g., `C:\AI\`).
+3. **Run:** Double-click `comfy-adv-install.bat`.
+* *Note: It will download ~5GB of data. Grab a coffee.*
+4. **Launch:** When finished, a `run.bat` file will appear. Double-click **`run.bat`** to start creating.
+5. **Update:** Use `update.bat` if you need to update the ComfyUI.
 
-* [ComfyUI-Manager](https://github.com/ltdrdata/ComfyUI-Manager)
-* [rgthree-comfy](https://github.com/rgthree/rgthree-comfy)
-* [ComfyUI-Easy-Use](https://github.com/yolain/ComfyUI-Easy-Use)
-* [ComfyUI-KJNodes](https://github.com/kijai/ComfyUI-KJNodes)
-* [ComfyUI-Crystools](https://github.com/crystian/ComfyUI-Crystools)
-* [comfyui-kokoro](https://github.com/stavsap/comfyui-kokoro)
+## 📦 What’s inside the box?
 
-## 📦 Installation
+### The Tech Stack
 
-1. **Prerequisites**: Ensure you have [Git](https://git-scm.com/) installed on your Windows machine.
-2. **Download**: Clone this repository or download the `.bat` file.
-3. **Run**: Double-click `comfy-adv-install.bat`.
-4. **Wait**: The script will download approximately 3-5GB of dependencies (PyTorch, Python, etc.).
-5. **Launch**: Once finished, use the generated path to start ComfyUI:
-```bash
-.\python_embeded\python.exe -s ComfyUI\main.py --windows-standalone-build
-```
+* **Python 3.13.9 + CUDA 13.0**: The bleeding edge of AI performance.
+* **SageAttention & Triton**: Faster rendering and better VRAM management.
 
-## 🔧 Technical Notes
+### Essential Nodes Included
 
-### The "Kokoro" Bypass
+You don't need to hunt these down; they are installed automatically:
 
-Standard installations of `comfyui-kokoro` often fail on Python 3.13 because they request `kokoro 0.4.2`. This script bypasses that requirement and manually injects `kokoro-onnx 0.4.4`, which is fully compatible with the 3.13 runtime, preventing installation crashes.
+* **ComfyUI-Manager**: The "App Store" for Comfy.
+* **IPAdapter Plus**: For Face Lock and Style Transfer.
+* **Impact Pack**: Essential for high-res detailing and inpainting.
+* **GGUF Support**: Run massive models (like Flux) on lower VRAM.
+* **SeedVR2**: Professional 4K upscaling.
 
-### Performance Tweaks
+## ⚠️ Requirements
 
-The script installs **SageAttention** and **Triton Windows** by default. If you are using an NVIDIA 30-series or 40-series card, you will see significantly improved inference times and reduced VRAM overhead in compatible workflows.
+* **OS:** Windows 10/11
+* **GPU:** NVIDIA RTX 20-series or higher recommended (8GB+ VRAM preferred).
+* **Storage:** ~15GB of free space.
 
-## ⚠️ Disclaimer
+## 🆘 Support & Updates
 
-This script is provided "as-is." It downloads binaries from various third-party sources (Python, PyTorch, GitHub). Always review the `.bat` file before running it on your system.
+* **Having Issues?** If the script fails or you hit an error, please **[Open an Issue Here](https://github.com/the3minutenode/ComfyUI-Advanced-Installer/issues)** so the community can help.
+
+**Join the Efficiency Movement:** [YouTube](https://www.youtube.com/@The3MinuteNode) | [Discord](https://discord.gg/wDn7cj68gm) | [Support the Project](https://paypal.com/donate/%3Fhosted_button_id%3DEF3QDPEWK359N)
