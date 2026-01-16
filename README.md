@@ -23,6 +23,7 @@ Get a pro-grade, portable ComfyUI environment in one click. Optimized for **Pyth
 
 * **Python 3.13.9 + CUDA 13.0**: The bleeding edge of AI performance.
 * **SageAttention & Triton**: Faster rendering and better VRAM management.
+* **Insightface**: High-accuracy face analysis and biometric recognition using state-of-the-art models.
 
 ### Essential Nodes Included
 
