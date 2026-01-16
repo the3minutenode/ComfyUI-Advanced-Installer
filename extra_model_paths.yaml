@@ -1,0 +1,35 @@
+comfyui:
+    base_path: C:/your_models/
+    is_default: true
+
+    audio_encoders: audio_encoders/
+    checkpoints: checkpoints/
+    clip: clip/
+    clip_vision: clip_vision/
+    configs: configs/
+    controlnet: controlnet/
+    diffusers: diffusers/
+    diffusion_models: diffusion_models/
+    embeddings: embeddings/
+    gligen: gligen/
+    hypernetworks: hypernetworks/
+    latent_upscale_models: latent_upscale_models/
+    loras: loras/
+    model_patches: model_patches/
+    photomaker: photomaker/
+    style_models: style_models/
+    text_encoders: text_encoders/
+    unet: unet/
+    upscale_models: upscale_models/
+    vae: vae/
+    vae_approx: vae_approx/
+    vibevoice: vibevoice/
+    ipadapter: ipadapter/    
+    insightface: insightface/
+    LLM: LLM/
+    sams: sams/
+    sam2: sam2/
+    SEEDVR2: SEEDVR2/
+    ultralytics: ultralytics/
+    wav2vec2: wav2vec2/
+    
