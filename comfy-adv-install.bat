@@ -1,7 +1,7 @@
 @echo off&&cd /d "%~dp0"
 
-Title The 3-Minute Node ComfyUI Advanced Installer v0.2
-:: The 3-Minute Node Community Edition ::
+Title The 3-Minute Node ComfyUI Advanced Installer v0.3 260116
+:: The 3-Minute Node Community Edition
 
 setlocal enabledelayedexpansion
 
@@ -11,7 +11,7 @@ set "EMBED_DIR=%~dp0python_embeded"
 set "COMFY_DIR=%~dp0ComfyUI"
 set "PYTHON_EXE=%EMBED_DIR%\python.exe"
 
-:: --- Prerequisites Check ---
+:: rerequisites Check
 where git >nul 2>nul || (echo [+] Git not found. Please install Git for Windows. && pause && exit /b)
 where curl >nul 2>nul || (echo [+] Curl not found. Update your Windows or install Curl. && pause && exit /b)
 
@@ -87,12 +87,15 @@ for %%i in (%NODES%) do (
 
 cd /d "%~dp0"
 
+echo.
 echo [+] Making run.bat...
 (
+echo @echo off
 echo python_embeded\python.exe -s ComfyUI\main.py --windows-standalone-build --disable-api-nodes --use-sage-attention
 echo pause
 ) > run.bat
 
+echo.
 echo [+] Making update.bat...
 (
 echo @echo off
@@ -106,6 +109,66 @@ echo echo [+] Done.
 echo pause
 ) > update.bat
 
+:: Extra Model Paths Setup
+echo.
+echo [+] Would you like to link an existing ComfyUI model folder?
+set /p "LINK_MODELS=Enter 'y' for Yes or press Enter to skip:"
+
+if /i "%LINK_MODELS%"=="y" (
+    echo [+] Opening folder picker... please select your MODEL root folder.
+
+    :: Use PowerShell to open a Folder Selection Dialog
+    for /f "usebackq delims=" %%I in (`powershell -NoProfile -ExecutionPolicy Bypass -Command "Add-Type -AssemblyName System.Windows.Forms; $f = New-Object System.Windows.Forms.FolderBrowserDialog; $f.Description = 'Select your existing Model Folder (contains checkpoints, loras, etc)'; if($f.ShowDialog() -eq 'OK'){ $f.SelectedPath } "`) do set "USER_PATH=%%I"
+
+    if defined USER_PATH (
+        echo [+] Path selected: !USER_PATH!
+
+        :: Create the YAML file. We use forward slashes to avoid escape issues in YAML.
+        set "ESCAPED_PATH=!USER_PATH:\=/!"
+
+        (
+			echo comfyui:
+			echo     base_path: !ESCAPED_PATH!
+			echo     is_default: true
+			echo     audio_encoders: audio_encoders
+			echo     checkpoints: checkpoints
+			echo     clip: clip
+			echo     clip_vision: clip_vision
+			echo     configs: configs
+			echo     controlnet: controlnet
+			echo     diffusers: diffusers
+			echo     diffusion_models: diffusion_models
+			echo     embeddings: embeddings
+			echo     gligen: gligen
+			echo     hypernetworks: hypernetworks
+			echo     latent_upscale_models: latent_upscale_models
+			echo     loras: loras
+			echo     model_patches: model_patches
+			echo     photomaker: photomaker
+			echo     style_models: style_models
+			echo     text_encoders: text_encoders
+			echo     unet: unet
+			echo     upscale_models: upscale_models
+			echo     vae: vae
+			echo     vae_approx: vae_approx
+			echo     vibevoice: vibevoice
+			echo     ipadapter: ipadapter
+			echo     insightface: insightface
+			echo     LLM: LLM
+			echo     sams: sams
+			echo     sam2: sam2
+			echo     SEEDVR2: SEEDVR2
+			echo     ultralytics: ultralytics
+			echo     wav2vec2: wav2vec2
+        ) > "%COMFY_DIR%\extra_model_paths.yaml"
+
+        echo [+] extra_model_paths.yaml created successfully.
+    ) else (
+        echo [+] No folder selected. Skipping...
+    )
+)
+
+echo.
 echo [+] Setup Complete.
 echo [+] Start: python_embeded\python.exe -s ComfyUI\main.py --windows-standalone-build
 
