@@ -13,8 +13,7 @@ Get a pro-grade, portable ComfyUI environment in one click. Optimized for **Pyth
 
 1. **Install Git:** Download and install [Git for Windows](https://git-scm.com/) (required to download the nodes).
 2. **Download the Script:** **[Download the Latest Release](https://github.com/the3minutenode/ComfyUI-Advanced-Installer/releases/latest)**. Put it in a folder where you want ComfyUI to live (e.g., `C:\AI\`).
-3. **Run:** Double-click `comfy-adv-install.bat`.
-* *Note: It will download ~5GB of data. Grab a coffee.*
+3. **Run:** Double-click `comfy-adv-install.bat`. *Note: It will download ~5GB of data. Grab a coffee.*
 4. **Launch:** When finished, a `run.bat` file will appear. Double-click **`run.bat`** to start creating.
 5. **Update:** Use `update.bat` if you need to update the ComfyUI.
 
