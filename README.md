@@ -18,7 +18,11 @@ Get a pro-grade, portable ComfyUI environment in one click. Optimized for **Pyth
 5. **Launch:** When finished, a `run.bat` file will appear. Double-click **`run.bat`** to start creating.
 6. **Update:** Use `update.bat` if you need to update the ComfyUI.
 
-<video src="demo.mp4" width="80%" controls></video>
+
+
+https://github.com/user-attachments/assets/73c69372-571d-467b-967b-0d088380659b
+
+
 
 ## 📦 What’s inside the box?
 
