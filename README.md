@@ -2,7 +2,7 @@
 
 Get a pro-grade, portable ComfyUI environment in one click. Optimized for **Python 3.13**, **CUDA 13**, and **SageAttention** for maximum speed on Windows.
 
-### 🚀 Why use this?
+## 🚀 Why use this?
 
 * **Faster:** Pre-configured with Triton and SageAttention for 30/40-series GPUs.
 * **Cleaner:** Portable "embedded" install. Everything stays inside one folder. It won't touch your system Python.
