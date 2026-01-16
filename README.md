@@ -47,6 +47,3 @@ The script installs **SageAttention** and **Triton Windows** by default. If you 
 ## ⚠️ Disclaimer
 
 This script is provided "as-is." It downloads binaries from various third-party sources (Python, PyTorch, GitHub). Always review the `.bat` file before running it on your system.
----
-
-### Would you like me to add a "Troubleshooting" section or a section on how to add more custom nodes to the script?
