@@ -9,7 +9,7 @@ Get a pro-grade, portable ComfyUI environment in one click. Optimized for **Pyth
 * **Modern:** Uses Python 3.13 and the newest CUDA 13.0 drivers.
 * **Pre-Loaded:** Only includes the **barebone essentials** required for professional workflows: (Manager, IPAdapter, Impact Pack, etc.).
 
-## 🛠️ Quick Start (Newbies Read This!)
+## 🛠️ Quick Start
 
 1. **Install Git:** Download and install [Git for Windows](https://git-scm.com/) (required to download the nodes).
 2. **Download the Script:** **[Download the Latest Release](https://github.com/the3minutenode/ComfyUI-Advanced-Installer/releases/latest)**. Put it in a folder where you want ComfyUI to live (e.g., `C:\AI\`).
