@@ -54,7 +54,6 @@ echo %CYAN%[+] Installing ComfyUI Base Dependencies...%RESET%
 echo %CYAN%[+] Installing LOCKED PyTorch CUDA 13.0 (Working Version)...%RESET%
 "%PYTHON_EXE%" -m pip install torch==2.9.1+cu130 torchvision==0.24.1+cu130 torchaudio==2.9.1+cu130 --force-reinstall %PIP_INDEX% %PIP_OPTS%
 :: "%PYTHON_EXE%" -m pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu130
-:: "%PYTHON_EXE%" -m pip install numpy==1.26.4 %PIP_OPTS%
 
 echo %CYAN%[+] Installing Specialized Dependencies...%RESET%
 echo %CYAN%[+] Installing Insightface...%RESET%
@@ -64,7 +63,7 @@ echo %CYAN%[+] Installing Kokoro-ONNX...%RESET%
 "%PYTHON_EXE%" -m pip install kokoro-onnx==0.4.4 %PIP_OPTS%
 
 echo %CYAN%[+] Installing Triton for Windows...%RESET%
-"%PYTHON_EXE%" -m pip install triton-windows<3.6 %PIP_OPTS%
+"%PYTHON_EXE%" -m pip install triton-windows==3.5.1.post24 %PIP_OPTS%
 
 echo %CYAN%[+] Installing SageAttention...%RESET%
 "%PYTHON_EXE%" -m pip install https://github.com/woct0rdho/SageAttention/releases/download/v2.2.0-windows.post4/sageattention-2.2.0+cu130torch2.9.0andhigher.post4-cp39-abi3-win_amd64.whl %PIP_OPTS%
@@ -94,6 +93,10 @@ for %%i in (%NODES%) do (
 cd /d "%~dp0"
 
 echo.
+echo %CYAN%[+] Forcing final NumPy version 2.3.5...%RESET%
+"%PYTHON_EXE%" -m pip install numpy==2.3.5 --force-reinstall %PIP_OPTS%
+
+echo.
 echo %CYAN%[+] Making run.bat...%RESET%
 (
 echo @echo off
@@ -121,7 +124,7 @@ echo %CYAN%[+] Would you like to link an existing ComfyUI model folder?%RESET%
 set /p "LINK_MODELS=Enter 'y' for Yes or press Enter to skip:"
 
 if /i "%LINK_MODELS%"=="y" (
-    echo [+] Opening folder picker... please select your MODEL root folder.
+    echo %GREEN%[+] Opening folder picker... please select your MODEL root folder.%RESET%
 
     :: Use PowerShell to open a Folder Selection Dialog
     for /f "usebackq delims=" %%I in (`powershell -NoProfile -ExecutionPolicy Bypass -Command "Add-Type -AssemblyName System.Windows.Forms; $f = New-Object System.Windows.Forms.FolderBrowserDialog; $f.Description = 'Select your existing Model Folder (contains checkpoints, loras, etc)'; if($f.ShowDialog() -eq 'OK'){ $f.SelectedPath } "`) do set "USER_PATH=%%I"
