@@ -7,7 +7,11 @@ setlocal enabledelayedexpansion
 
 call :set_colors
 
-:: --- STORAGE WARNING ---
+:: rerequisites Check
+where git >nul 2>nul || (echo %RED%[+] Git not found. Please install Git for Windows.%RESET% && pause && exit /b)
+where curl >nul 2>nul || (echo %RED%[+] Curl not found. Update your Windows or install Curl.%RESET% && pause && exit /b)
+
+:: storage warning
 echo %RED%===========================================================%RESET%
 echo %YELLOW%                     STORAGE WARNING%RESET%
 echo %RED%===========================================================%RESET%
@@ -18,7 +22,7 @@ echo Press any key to start the download, or close this window to cancel.
 pause >nul
 echo.
 
-:: Create the base directory structure
+:: create the base directory structure
 set "MODELS=ComfyUI\models"
 if not exist "%MODELS%" mkdir "%MODELS%"
 if not exist "%MODELS%\clip_vision" mkdir "%MODELS%\clip_vision"
@@ -82,7 +86,7 @@ echo %CYAN%All downloads complete.%RESET%
 pause
 exit /b
 
-:: --- SUBROUTINES ---
+:: subroutines
 
 :set_colors
 for /f "delims=" %%a in ('powershell -command "[char]27"') do set "ESC=%%a"
