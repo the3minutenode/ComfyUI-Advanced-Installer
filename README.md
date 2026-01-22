@@ -29,6 +29,8 @@ https://github.com/user-attachments/assets/6191c723-defe-4c70-a926-da3bc6c433a5
 * **SageAttention & Triton**: Faster rendering and better VRAM management.
 * **Insightface**: High-accuracy face analysis and biometric recognition using state-of-the-art models.
 
+![dependencies](dependencies.png)
+
 ### 🖼️ IPAdapter Model Downloader
 
 The installer includes a dedicated script (`ipadapter-downloader.bat`) to automate the complex setup of IPAdapter Plus. It handles:
