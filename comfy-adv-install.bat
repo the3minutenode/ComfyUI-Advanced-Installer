@@ -13,7 +13,7 @@ set "EMBED_DIR=%~dp0python_embeded"
 set "COMFY_DIR=%~dp0ComfyUI"
 set "PYTHON_EXE=%EMBED_DIR%\python.exe"
 
-:: rerequisites Check
+:: Prerequisites Check
 where git >nul 2>nul || (echo %RED%[+] Git not found. Please install Git for Windows.%RESET% && pause && exit /b)
 where curl >nul 2>nul || (echo %RED%[+] Curl not found. Update your Windows or install Curl.%RESET% && pause && exit /b)
 
@@ -43,8 +43,16 @@ curl --ssl-no-revoke -L -o "%EMBED_DIR%\get-pip.py" https://bootstrap.pypa.io/ge
 "%PYTHON_EXE%" "%EMBED_DIR%\get-pip.py" --no-warn-script-location
 del "%EMBED_DIR%\get-pip.py"
 
-echo %CYAN%[+] Installing PyTorch CUDA 13.0...%RESET%
-"%PYTHON_EXE%" -m pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu130
+echo %CYAN%[+] Cloning ComfyUI...%RESET%
+if not exist "%COMFY_DIR%" git clone https://github.com/comfyanonymous/ComfyUI.git "%COMFY_DIR%"
+
+echo %CYAN%[+] Installing ComfyUI Base Dependencies...%RESET%
+"%PYTHON_EXE%" -m pip install -r "%COMFY_DIR%\requirements.txt"
+
+echo %CYAN%[+] Installing LOCKED PyTorch CUDA 13.0 (Working Version)...%RESET%
+"%PYTHON_EXE%" -m pip install torch==2.9.1+cu130 torchvision==0.24.1+cu130 torchaudio==2.9.1+cu130 --extra-index-url https://download.pytorch.org/whl/cu130 --force-reinstall
+
+:: "%PYTHON_EXE%" -m pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu130
 
 echo %CYAN%[+] Installing Specialized Dependencies...%RESET%
 echo %CYAN%[+] Installing Insightface...%RESET%
@@ -58,12 +66,6 @@ echo %CYAN%[+] Installing Triton for Windows...%RESET%
 
 echo %CYAN%[+] Installing SageAttention...%RESET%
 "%PYTHON_EXE%" -m pip install https://github.com/woct0rdho/SageAttention/releases/download/v2.2.0-windows.post4/sageattention-2.2.0+cu130torch2.9.0andhigher.post4-cp39-abi3-win_amd64.whl
-
-echo %CYAN%[+] Cloning ComfyUI...%RESET%
-if not exist "%COMFY_DIR%" git clone https://github.com/comfyanonymous/ComfyUI.git "%COMFY_DIR%"
-
-echo %CYAN%[+] Installing ComfyUI Base Dependencies...%RESET%
-"%PYTHON_EXE%" -m pip install -r "%COMFY_DIR%\requirements.txt"
 
 echo %CYAN%[+] Installing Custom Nodes...%RESET%
 set "NODES=https://github.com/ltdrdata/ComfyUI-Manager https://github.com/rgthree/rgthree-comfy https://github.com/yolain/ComfyUI-Easy-Use https://github.com/kijai/ComfyUI-KJNodes https://github.com/crystian/ComfyUI-Crystools https://github.com/city96/ComfyUI-GGUF https://github.com/Fannovel16/comfyui_controlnet_aux https://github.com/ltdrdata/ComfyUI-Impact-Pack https://github.com/ltdrdata/ComfyUI-Impact-Subpack https://github.com/numz/ComfyUI-SeedVR2_VideoUpscaler https://github.com/cubiq/ComfyUI_IPAdapter_plus https://github.com/stavsap/comfyui-kokoro"
