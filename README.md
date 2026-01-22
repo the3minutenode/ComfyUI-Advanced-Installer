@@ -13,10 +13,11 @@ Get a pro-grade, portable ComfyUI environment in one click. Optimized for **Pyth
 
 1. **Install Git:** Download and install [Git for Windows](https://git-scm.com/) (required to download the nodes).
 2. **Download the Script:** **[Download the Latest Release](https://github.com/the3minutenode/ComfyUI-Advanced-Installer/releases/latest)**. Put it in a folder where you want ComfyUI to live (e.g., `C:\AI\`).
-3. **Run:** Double-click `comfy-adv-install.bat`. *Note: It will download ~5GB of data. Grab a coffee.*
+3. **Run Installer:** Double-click `comfy-adv-install.bat`. *Note: It will download ~5GB of data. Grab a coffee.*
 4. **Link Models (Optional):** Near the end of the installation, a message will ask if you want to link an existing model folder.
-5. **Launch:** When finished, a `run.bat` file will appear. Double-click **`run.bat`** to start creating.
-6. **Update:** Use `update.bat` if you need to update the ComfyUI.
+5. **Download IPAdapter Models (Optional but Recommended):** To use Face Lock or Style Transfer, run the `download-ipadapter.bat`. This will fetch the necessary heavy-weight models (~15GB).
+6. **Launch:** When finished, a `run.bat` file will appear. Double-click **`run.bat`** to start creating.
+7. **Update:** Use `update.bat` if you need to update the ComfyUI.
 
 https://github.com/user-attachments/assets/6191c723-defe-4c70-a926-da3bc6c433a5
 
@@ -28,6 +29,15 @@ https://github.com/user-attachments/assets/6191c723-defe-4c70-a926-da3bc6c433a5
 * **SageAttention & Triton**: Faster rendering and better VRAM management.
 * **Insightface**: High-accuracy face analysis and biometric recognition using state-of-the-art models.
 
+### 🖼️ IPAdapter Model Downloader
+
+The installer includes a dedicated script (`ipadapter-downloader.bat`) to automate the complex setup of IPAdapter Plus. It handles:
+
+* **CLIP Vision Encoders:** Standard (ViT-H) and BigG models.
+* **IPAdapter Weights:** Full suite for SD1.5 and SDXL (Plus, FaceID, Portrait, and Light versions).
+* **FaceID LoRAs:** Essential for high-fidelity face cloning.
+* **Auto-Sorting:** Automatically places files in `models/clip_vision`, `models/ipadapter`, and `models/loras`.
+ 
 ### Essential Nodes Included
 
 You don't need to hunt these down; they are installed automatically:
