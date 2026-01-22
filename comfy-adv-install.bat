@@ -12,6 +12,8 @@ set "TRITON_LIBS_URL=https://github.com/woct0rdho/triton-windows/releases/downlo
 set "EMBED_DIR=%~dp0python_embeded"
 set "COMFY_DIR=%~dp0ComfyUI"
 set "PYTHON_EXE=%EMBED_DIR%\python.exe"
+set "PIP_INDEX=--extra-index-url=https://download.pytorch.org/whl/cu130"
+set "PIP_OPTS=--no-cache-dir --no-warn-script-location --timeout=1000 --prefer-binary"
 
 :: Prerequisites Check
 where git >nul 2>nul || (echo %RED%[+] Git not found. Please install Git for Windows.%RESET% && pause && exit /b)
@@ -47,25 +49,25 @@ echo %CYAN%[+] Cloning ComfyUI...%RESET%
 if not exist "%COMFY_DIR%" git clone https://github.com/comfyanonymous/ComfyUI.git "%COMFY_DIR%"
 
 echo %CYAN%[+] Installing ComfyUI Base Dependencies...%RESET%
-"%PYTHON_EXE%" -m pip install -r "%COMFY_DIR%\requirements.txt"
+"%PYTHON_EXE%" -m pip install -r "%COMFY_DIR%\requirements.txt" %PIP_OPTS%
 
 echo %CYAN%[+] Installing LOCKED PyTorch CUDA 13.0 (Working Version)...%RESET%
-"%PYTHON_EXE%" -m pip install torch==2.9.1+cu130 torchvision==0.24.1+cu130 torchaudio==2.9.1+cu130 --extra-index-url https://download.pytorch.org/whl/cu130 --force-reinstall
-
+"%PYTHON_EXE%" -m pip install torch==2.9.1+cu130 torchvision==0.24.1+cu130 torchaudio==2.9.1+cu130 --force-reinstall %PIP_INDEX% %PIP_OPTS%
 :: "%PYTHON_EXE%" -m pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu130
+:: "%PYTHON_EXE%" -m pip install numpy==1.26.4 %PIP_OPTS%
 
 echo %CYAN%[+] Installing Specialized Dependencies...%RESET%
 echo %CYAN%[+] Installing Insightface...%RESET%
-"%PYTHON_EXE%" -m pip install https://github.com/Gourieff/Assets/raw/main/Insightface/insightface-0.7.3-cp313-cp313-win_amd64.whl
+"%PYTHON_EXE%" -m pip install https://github.com/Gourieff/Assets/raw/main/Insightface/insightface-0.7.3-cp313-cp313-win_amd64.whl %PIP_OPTS%
 
 echo %CYAN%[+] Installing Kokoro-ONNX...%RESET%
-"%PYTHON_EXE%" -m pip install kokoro-onnx==0.4.4
+"%PYTHON_EXE%" -m pip install kokoro-onnx==0.4.4 %PIP_OPTS%
 
 echo %CYAN%[+] Installing Triton for Windows...%RESET%
-"%PYTHON_EXE%" -m pip install triton-windows
+"%PYTHON_EXE%" -m pip install triton-windows<3.6 %PIP_OPTS%
 
 echo %CYAN%[+] Installing SageAttention...%RESET%
-"%PYTHON_EXE%" -m pip install https://github.com/woct0rdho/SageAttention/releases/download/v2.2.0-windows.post4/sageattention-2.2.0+cu130torch2.9.0andhigher.post4-cp39-abi3-win_amd64.whl
+"%PYTHON_EXE%" -m pip install https://github.com/woct0rdho/SageAttention/releases/download/v2.2.0-windows.post4/sageattention-2.2.0+cu130torch2.9.0andhigher.post4-cp39-abi3-win_amd64.whl %PIP_OPTS%
 
 echo %CYAN%[+] Installing Custom Nodes...%RESET%
 set "NODES=https://github.com/ltdrdata/ComfyUI-Manager https://github.com/rgthree/rgthree-comfy https://github.com/yolain/ComfyUI-Easy-Use https://github.com/kijai/ComfyUI-KJNodes https://github.com/crystian/ComfyUI-Crystools https://github.com/city96/ComfyUI-GGUF https://github.com/Fannovel16/comfyui_controlnet_aux https://github.com/ltdrdata/ComfyUI-Impact-Pack https://github.com/ltdrdata/ComfyUI-Impact-Subpack https://github.com/numz/ComfyUI-SeedVR2_VideoUpscaler https://github.com/cubiq/ComfyUI_IPAdapter_plus https://github.com/stavsap/comfyui-kokoro"
@@ -84,7 +86,7 @@ for %%i in (%NODES%) do (
             echo %YELLOW%[+] Skipping requirements for comfyui-kokoro%RESET%
         ) else (
             echo %GREEN%[+] Installing requirements for !FOLDER_NAME!...%RESET%
-            "%PYTHON_EXE%" -m pip install -r "!FOLDER_NAME!\requirements.txt"
+            "%PYTHON_EXE%" -m pip install -r "!FOLDER_NAME!\requirements.txt" %PIP_INDEX% %PIP_OPTS%
         )
     )
 )
@@ -108,7 +110,7 @@ echo echo [+] Pulling latest ComfyUI...
 echo git fetch --all
 echo git reset --hard origin/master
 echo echo [+] Updating requirements...
-echo ..\python_embeded\python.exe -m pip install -r requirements.txt
+echo ..\python_embeded\python.exe -m pip install -r requirements.txt --no-cache-dir --no-warn-script-location --timeout=1000 --prefer-binary
 echo echo [+] Done.
 echo pause
 ) > update.bat
