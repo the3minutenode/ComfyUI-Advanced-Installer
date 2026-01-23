@@ -21,6 +21,7 @@ Get a pro-grade, portable ComfyUI environment in one click. Optimized for **Pyth
 
 https://github.com/user-attachments/assets/6191c723-defe-4c70-a926-da3bc6c433a5
 
+Demo on Youtube:
 [![demo](https://i.ytimg.com/vi/BHuoCsjz0Hg/maxresdefault.jpg)](https://www.youtube.com/watch?v=BHuoCsjz0Hg)
 
 ## 📦 What’s inside the box?
