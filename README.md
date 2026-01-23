@@ -15,7 +15,7 @@ Get a pro-grade, portable ComfyUI environment in one click. Optimized for **Pyth
 2. **Download the Script:** **[Download the Latest Release](https://github.com/the3minutenode/ComfyUI-Advanced-Installer/releases/latest)**. Put it in a folder where you want ComfyUI to live (e.g., `C:\AI\`).
 3. **Run Installer:** Double-click `comfy-adv-install.bat`. *Note: It will download ~5GB of data. Grab a coffee.*
 4. **Link Models (Optional):** Near the end of the installation, a message will ask if you want to link an existing model folder.
-5. **Download IPAdapter Models (Optional but Recommended):** To use Face Lock or Style Transfer, run the `download-ipadapter.bat`. This will fetch the necessary heavy-weight models (~15GB).
+5. **Download IPAdapter Models (Optional but Recommended):** To use Face Lock or Style Transfer, run the `ipadapter-downloader.bat`. This will fetch the necessary heavy-weight models (~15GB).
 6. **Launch:** When finished, a `run.bat` file will appear. Double-click **`run.bat`** to start creating.
 7. **Update:** Use `update.bat` if you need to update the ComfyUI.
 
