@@ -20,7 +20,8 @@ Get a pro-grade, portable ComfyUI environment in one click. Optimized for **Pyth
 7. **Update:** Use `update.bat` if you need to update the ComfyUI.
 
 https://github.com/user-attachments/assets/6191c723-defe-4c70-a926-da3bc6c433a5
-[demo](https://www.youtube.com/watch?v=BHuoCsjz0Hg)
+
+![demo](https://www.youtube.com/watch?v=BHuoCsjz0Hg)
 
 ## 📦 What’s inside the box?
 
