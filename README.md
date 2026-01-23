@@ -2,6 +2,12 @@
 
 Get a pro-grade, portable ComfyUI environment in one click. Optimized for **Python 3.13**, **CUDA 13**, and **SageAttention** for maximum speed on Windows.
 
+![GitHub Release](https://img.shields.io/github/v/release/the3minutenode/ComfyUI-Advanced-Installer)
+![GitHub last commit](https://img.shields.io/github/last-commit/the3minutenode/ComfyUI-Advanced-Installer)
+![YouTube Channel Subscribers](https://img.shields.io/youtube/channel/subscribers/UC8ZKAaWoHYLy58Y6dmypHqg)
+![YouTube Channel Views](https://img.shields.io/youtube/channel/views/UC8ZKAaWoHYLy58Y6dmypHqg)
+
+
 ## 🚀 Why use this?
 
 * **Faster:** Pre-configured with Triton and SageAttention for 30/40-series GPUs.
