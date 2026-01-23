@@ -7,9 +7,9 @@ Get a pro-grade, portable ComfyUI environment in one click. Optimized for **Pyth
 ![GitHub last commit](https://img.shields.io/github/last-commit/the3minutenode/ComfyUI-Advanced-Installer)
 ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/the3minutenode/ComfyUI-Advanced-Installer/total)
 
-![Discord](https://img.shields.io/discord/1431137394056233030?label=discord)
-![YouTube Channel Subscribers](https://img.shields.io/youtube/channel/subscribers/UC8ZKAaWoHYLy58Y6dmypHqg?label=Youtube%20Subscribers)
-![YouTube Channel Views](https://img.shields.io/youtube/channel/views/UC8ZKAaWoHYLy58Y6dmypHqg?label=Youtube%20Views)
+![Discord](https://img.shields.io/discord/1431137394056233030?label=discord&link=https%3A%2F%2Fdiscord.com%2Finvite%2FwDn7cj68gm)
+![YouTube Channel Subscribers](https://img.shields.io/youtube/channel/subscribers/UC8ZKAaWoHYLy58Y6dmypHqg?label=YouTube%20Subscribers&link=https%3A%2F%2Fwww.youtube.com%2F%40The3MinuteNode)
+![YouTube Channel Views](https://img.shields.io/youtube/channel/views/UC8ZKAaWoHYLy58Y6dmypHqg?label=YouTube%20%5CViews&link=https%3A%2F%2Fwww.youtube.com%2F%40The3MinuteNode)
 
 ## 🚀 Why use this?
 
