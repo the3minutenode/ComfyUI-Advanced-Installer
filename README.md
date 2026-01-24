@@ -6,6 +6,7 @@ Get a pro-grade, portable ComfyUI environment in one click. Optimized for **Pyth
 [![GitHub Release Date](https://img.shields.io/github/release-date/the3minutenode/ComfyUI-Advanced-Installer)](https://github.com/the3minutenode/ComfyUI-Advanced-Installer/releases/latest)
 [![GitHub last commit](https://img.shields.io/github/last-commit/the3minutenode/ComfyUI-Advanced-Installer)](https://github.com/the3minutenode/ComfyUI-Advanced-Installer/releases/latest)
 [![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/the3minutenode/ComfyUI-Advanced-Installer/total)](https://github.com/the3minutenode/ComfyUI-Advanced-Installer/releases/latest)
+[![Static Badge](https://img.shields.io/badge/ComfyOrg-blue)](https://github.com/Comfy-Org/ComfyUI)
 
 [![Discord](https://img.shields.io/discord/1431137394056233030?label=discord&logo=discord&logoColor=white)](https://discord.com/invite/wDn7cj68gm)
 [![Static Badge](https://img.shields.io/badge/discord-1182%20total-brightgreen?logo=discord&logoColor=white)](https://discord.com/invite/wDn7cj68gm)
