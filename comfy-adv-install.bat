@@ -1,6 +1,6 @@
 @echo off&&cd /d "%~dp0"
 
-Title The 3-Minute Node ComfyUI Advanced Installer v0.4 260122
+Title The 3-Minute Node ComfyUI Advanced Installer v0.4.1 260125
 :: The 3-Minute Node Community Edition
 
 setlocal enabledelayedexpansion
@@ -42,31 +42,31 @@ powershell -Command "$content = Get-Content '%EMBED_DIR%\python313._pth'; '../Co
 
 echo %CYAN%[+] Downloading pip...%RESET%
 curl --ssl-no-revoke -L -o "%EMBED_DIR%\get-pip.py" https://bootstrap.pypa.io/get-pip.py
-"%PYTHON_EXE%" "%EMBED_DIR%\get-pip.py" --no-warn-script-location
+"%PYTHON_EXE%" -I "%EMBED_DIR%\get-pip.py" --no-warn-script-location
 del "%EMBED_DIR%\get-pip.py"
 
 echo %CYAN%[+] Cloning ComfyUI...%RESET%
 if not exist "%COMFY_DIR%" git clone https://github.com/comfyanonymous/ComfyUI.git "%COMFY_DIR%"
 
 echo %CYAN%[+] Installing ComfyUI Base Dependencies...%RESET%
-"%PYTHON_EXE%" -m pip install -r "%COMFY_DIR%\requirements.txt" %PIP_OPTS%
+"%PYTHON_EXE%" -I -m pip install -r "%COMFY_DIR%\requirements.txt" %PIP_OPTS%
 
 echo %CYAN%[+] Installing LOCKED PyTorch CUDA 13.0 (Working Version)...%RESET%
-"%PYTHON_EXE%" -m pip install torch==2.9.1+cu130 torchvision==0.24.1+cu130 torchaudio==2.9.1+cu130 --force-reinstall %PIP_INDEX% %PIP_OPTS%
-:: "%PYTHON_EXE%" -m pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu130
+"%PYTHON_EXE%" -I -m pip install torch==2.9.1+cu130 torchvision==0.24.1+cu130 torchaudio==2.9.1+cu130 --force-reinstall %PIP_INDEX% %PIP_OPTS%
+:: "%PYTHON_EXE%" -I -m pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu130
 
 echo %CYAN%[+] Installing Specialized Dependencies...%RESET%
 echo %CYAN%[+] Installing Insightface...%RESET%
-"%PYTHON_EXE%" -m pip install https://github.com/Gourieff/Assets/raw/main/Insightface/insightface-0.7.3-cp313-cp313-win_amd64.whl %PIP_OPTS%
+"%PYTHON_EXE%" -I -m pip install https://github.com/Gourieff/Assets/raw/main/Insightface/insightface-0.7.3-cp313-cp313-win_amd64.whl %PIP_OPTS%
 
 echo %CYAN%[+] Installing Kokoro-ONNX...%RESET%
-"%PYTHON_EXE%" -m pip install kokoro-onnx==0.4.4 %PIP_OPTS%
+"%PYTHON_EXE%" -I -m pip install kokoro-onnx==0.4.4 %PIP_OPTS%
 
 echo %CYAN%[+] Installing Triton for Windows...%RESET%
-"%PYTHON_EXE%" -m pip install triton-windows==3.5.1.post24 %PIP_OPTS%
+"%PYTHON_EXE%" -I -m pip install triton-windows==3.5.1.post24 %PIP_OPTS%
 
 echo %CYAN%[+] Installing SageAttention...%RESET%
-"%PYTHON_EXE%" -m pip install https://github.com/woct0rdho/SageAttention/releases/download/v2.2.0-windows.post4/sageattention-2.2.0+cu130torch2.9.0andhigher.post4-cp39-abi3-win_amd64.whl %PIP_OPTS%
+"%PYTHON_EXE%" -I -m pip install https://github.com/woct0rdho/SageAttention/releases/download/v2.2.0-windows.post4/sageattention-2.2.0+cu130torch2.9.0andhigher.post4-cp39-abi3-win_amd64.whl %PIP_OPTS%
 
 echo %CYAN%[+] Installing Custom Nodes...%RESET%
 set "NODES=https://github.com/ltdrdata/ComfyUI-Manager https://github.com/rgthree/rgthree-comfy https://github.com/yolain/ComfyUI-Easy-Use https://github.com/kijai/ComfyUI-KJNodes https://github.com/crystian/ComfyUI-Crystools https://github.com/city96/ComfyUI-GGUF https://github.com/Fannovel16/comfyui_controlnet_aux https://github.com/ltdrdata/ComfyUI-Impact-Pack https://github.com/ltdrdata/ComfyUI-Impact-Subpack https://github.com/numz/ComfyUI-SeedVR2_VideoUpscaler https://github.com/cubiq/ComfyUI_IPAdapter_plus https://github.com/stavsap/comfyui-kokoro"
@@ -85,7 +85,7 @@ for %%i in (%NODES%) do (
             echo %YELLOW%[+] Skipping requirements for comfyui-kokoro%RESET%
         ) else (
             echo %GREEN%[+] Installing requirements for !FOLDER_NAME!...%RESET%
-            "%PYTHON_EXE%" -m pip install -r "!FOLDER_NAME!\requirements.txt" %PIP_INDEX% %PIP_OPTS%
+            "%PYTHON_EXE%" -I -m pip install -r "!FOLDER_NAME!\requirements.txt" %PIP_INDEX% %PIP_OPTS%
         )
     )
 )
@@ -94,13 +94,13 @@ cd /d "%~dp0"
 
 echo.
 echo %CYAN%[+] Forcing final NumPy version 2.3.5...%RESET%
-"%PYTHON_EXE%" -m pip install numpy==2.3.5 --force-reinstall %PIP_OPTS%
+"%PYTHON_EXE%" -I -m pip install numpy==2.3.5 --force-reinstall %PIP_OPTS%
 
 echo.
 echo %CYAN%[+] Making run.bat...%RESET%
 (
 echo @echo off
-echo python_embeded\python.exe -s ComfyUI\main.py --windows-standalone-build --disable-api-nodes --use-sage-attention
+echo python_embeded\python.exe -s -W ignore::FutureWarning ComfyUI\main.py --windows-standalone-build --disable-api-nodes --use-sage-attention
 echo pause
 ) > run.bat
 
@@ -113,7 +113,7 @@ echo echo [+] Pulling latest ComfyUI...
 echo git fetch --all
 echo git reset --hard origin/master
 echo echo [+] Updating requirements...
-echo ..\python_embeded\python.exe -m pip install -r requirements.txt --no-cache-dir --no-warn-script-location --timeout=1000 --prefer-binary
+echo ..\python_embeded\python.exe -I -m pip install -r requirements.txt --no-cache-dir --no-warn-script-location --timeout=1000 --prefer-binary
 echo echo [+] Done.
 echo pause
 ) > update.bat
