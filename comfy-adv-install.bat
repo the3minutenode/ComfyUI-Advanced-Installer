@@ -1,13 +1,14 @@
 @echo off&&cd /d "%~dp0"
 
-Title The 3-Minute Node ComfyUI Advanced Installer v0.4.1 260125
+Title The 3-Minute Node ComfyUI Advanced Installer v0.5 260402
 :: The 3-Minute Node Community Edition
+:: align with comfyui_windows_portable_nvidia 0.18.2
 
 setlocal enabledelayedexpansion
 
 call :set_colors
 
-set "PYTHON_URL=https://www.python.org/ftp/python/3.13.9/python-3.13.9-embed-amd64.zip"
+set "PYTHON_URL=https://www.python.org/ftp/python/3.13.11/python-3.13.11-embed-amd64.zip"
 set "TRITON_LIBS_URL=https://github.com/woct0rdho/triton-windows/releases/download/v3.0.0-windows.post1/python_3.13.2_include_libs.zip"
 set "EMBED_DIR=%~dp0python_embeded"
 set "COMFY_DIR=%~dp0ComfyUI"
@@ -52,7 +53,7 @@ echo %CYAN%[+] Installing ComfyUI Base Dependencies...%RESET%
 "%PYTHON_EXE%" -I -m pip install -r "%COMFY_DIR%\requirements.txt" %PIP_OPTS%
 
 echo %CYAN%[+] Installing LOCKED PyTorch CUDA 13.0 (Working Version)...%RESET%
-"%PYTHON_EXE%" -I -m pip install torch==2.9.1+cu130 torchvision==0.24.1+cu130 torchaudio==2.9.1+cu130 --force-reinstall %PIP_INDEX% %PIP_OPTS%
+"%PYTHON_EXE%" -I -m pip install torch==2.10.0+cu130 torchvision==0.25.0+cu130 torchaudio==2.10.0+cu130 --force-reinstall %PIP_INDEX% %PIP_OPTS%
 :: "%PYTHON_EXE%" -I -m pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu130
 
 echo %CYAN%[+] Installing Specialized Dependencies...%RESET%
