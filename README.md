@@ -17,7 +17,7 @@ Get a pro-grade, portable ComfyUI environment in one click. Optimized for **Pyth
 
 ## 🚀 Why use this?
 
-* **Faster:** Pre-configured with Triton and SageAttention for 30/40-series GPUs.
+* **Faster:** Pre-configured with Triton and SageAttention for RTX 30/40/50 series GPUs.
 * **Cleaner:** Portable "embedded" install. Everything stays inside one folder. It won't touch your system Python.
 * **Modern:** Uses Python 3.13 and the newest CUDA 13.0 drivers.
 * **Pre-Loaded:** Only includes the **barebone essentials** required for professional workflows: (Manager, IPAdapter, Impact Pack, etc.).
