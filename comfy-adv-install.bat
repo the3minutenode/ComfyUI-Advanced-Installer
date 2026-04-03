@@ -94,8 +94,8 @@ for %%i in (%NODES%) do (
 cd /d "%~dp0"
 
 echo.
-echo %CYAN%[+] Forcing final NumPy version 2.3.5...%RESET%
-"%PYTHON_EXE%" -I -m pip install numpy==2.3.5 --force-reinstall %PIP_OPTS%
+echo %CYAN%[+] Forcing final NumPy version 2.4.3...%RESET%
+"%PYTHON_EXE%" -I -m pip install numpy==2.4.3 --force-reinstall %PIP_OPTS%
 
 echo.
 echo %CYAN%[+] Making run.bat...%RESET%
