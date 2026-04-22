@@ -1,15 +1,16 @@
 @echo off&&cd /d "%~dp0"
 
-Title The 3-Minute Node ComfyUI Advanced Installer v0.5 260402
+Title The 3-Minute Node ComfyUI Advanced Installer v0.6 260422
 :: The 3-Minute Node Community Edition
-:: align with comfyui_windows_portable_nvidia 0.18.2
+:: align with comfyui_windows_portable_nvidia 0.19.3
 
 setlocal enabledelayedexpansion
 
 call :set_colors
 
-set "PYTHON_URL=https://www.python.org/ftp/python/3.13.11/python-3.13.11-embed-amd64.zip"
+set "PYTHON_URL=https://www.python.org/ftp/python/3.13.12/python-3.13.12-embed-amd64.zip"
 set "TRITON_LIBS_URL=https://github.com/woct0rdho/triton-windows/releases/download/v3.0.0-windows.post1/python_3.13.2_include_libs.zip"
+set "CUBLAS_URL=https://huggingface.co/datasets/the3minutenode/comfy-install/resolve/main"
 set "EMBED_DIR=%~dp0python_embeded"
 set "COMFY_DIR=%~dp0ComfyUI"
 set "PYTHON_EXE=%EMBED_DIR%\python.exe"
@@ -46,6 +47,12 @@ curl --ssl-no-revoke -L -o "%EMBED_DIR%\get-pip.py" https://bootstrap.pypa.io/ge
 "%PYTHON_EXE%" -I "%EMBED_DIR%\get-pip.py" --no-warn-script-location
 del "%EMBED_DIR%\get-pip.py"
 
+echo %CYAN%[+] Downloading cublas...%RESET%
+curl --ssl-no-revoke -L -o "%EMBED_DIR%\cublas64_12.dll" "%CUBLAS_URL%/cublas64_12.dll"
+curl --ssl-no-revoke -L -o "%EMBED_DIR%\cublasLt64_12.dll" "%CUBLAS_URL%/cublasLt64_12.dll"
+curl --ssl-no-revoke -L -o "%EMBED_DIR%\cudart64_12.dll" "%CUBLAS_URL%/cudart64_12.dll"
+curl --ssl-no-revoke -L -o "%EMBED_DIR%\cufft64_11.dll" "%CUBLAS_URL%/cufft64_11.dll"
+
 echo %CYAN%[+] Cloning ComfyUI...%RESET%
 if not exist "%COMFY_DIR%" git clone https://github.com/comfyanonymous/ComfyUI.git "%COMFY_DIR%"
 
@@ -53,7 +60,7 @@ echo %CYAN%[+] Installing ComfyUI Base Dependencies...%RESET%
 "%PYTHON_EXE%" -I -m pip install -r "%COMFY_DIR%\requirements.txt" %PIP_OPTS%
 
 echo %CYAN%[+] Installing LOCKED PyTorch CUDA 13.0 (Working Version)...%RESET%
-"%PYTHON_EXE%" -I -m pip install torch==2.10.0+cu130 torchvision==0.25.0+cu130 torchaudio==2.10.0+cu130 --force-reinstall %PIP_INDEX% %PIP_OPTS%
+"%PYTHON_EXE%" -I -m pip install torch==2.11.0+cu130 torchvision==0.26.0+cu130 torchaudio==2.11.0+cu130 --force-reinstall %PIP_INDEX% %PIP_OPTS%
 :: "%PYTHON_EXE%" -I -m pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu130
 
 echo %CYAN%[+] Installing Specialized Dependencies...%RESET%
@@ -70,7 +77,7 @@ echo %CYAN%[+] Installing SageAttention...%RESET%
 "%PYTHON_EXE%" -I -m pip install https://github.com/woct0rdho/SageAttention/releases/download/v2.2.0-windows.post4/sageattention-2.2.0+cu130torch2.9.0andhigher.post4-cp39-abi3-win_amd64.whl %PIP_OPTS%
 
 echo %CYAN%[+] Installing Custom Nodes...%RESET%
-set "NODES=https://github.com/ltdrdata/ComfyUI-Manager https://github.com/rgthree/rgthree-comfy https://github.com/yolain/ComfyUI-Easy-Use https://github.com/kijai/ComfyUI-KJNodes https://github.com/crystian/ComfyUI-Crystools https://github.com/city96/ComfyUI-GGUF https://github.com/Fannovel16/comfyui_controlnet_aux https://github.com/ltdrdata/ComfyUI-Impact-Pack https://github.com/ltdrdata/ComfyUI-Impact-Subpack https://github.com/numz/ComfyUI-SeedVR2_VideoUpscaler https://github.com/cubiq/ComfyUI_IPAdapter_plus https://github.com/stavsap/comfyui-kokoro"
+set "NODES=https://github.com/ltdrdata/ComfyUI-Manager https://github.com/rgthree/rgthree-comfy https://github.com/yolain/ComfyUI-Easy-Use https://github.com/kijai/ComfyUI-KJNodes https://github.com/BobRandomNumber/ComfyUI-Crystools-MonitorOnly https://github.com/city96/ComfyUI-GGUF https://github.com/ltdrdata/ComfyUI-Impact-Pack https://github.com/ltdrdata/ComfyUI-Impact-Subpack https://github.com/numz/ComfyUI-SeedVR2_VideoUpscaler https://github.com/cubiq/ComfyUI_IPAdapter_plus https://github.com/stavsap/comfyui-kokoro https://github.com/stavsap/comfyui-ollama https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch https://github.com/cubiq/ComfyUI_FaceAnalysis https://github.com/Fannovel16/comfyui_controlnet_aux"
 
 cd /d "%COMFY_DIR%\custom_nodes"
 for %%i in (%NODES%) do (
@@ -84,6 +91,12 @@ for %%i in (%NODES%) do (
     if exist "!FOLDER_NAME!\requirements.txt" (
 		if "!FOLDER_NAME!"=="comfyui-kokoro" (
             echo %YELLOW%[+] Skipping requirements for comfyui-kokoro%RESET%
+        ) else if "!FOLDER_NAME!"=="ComfyUI_FaceAnalysis" (
+            echo %YELLOW%[+] Filtering dlib from requirements...%RESET%
+            :: Create a temp requirements file without dlib
+            findstr /V /I "dlib" "!FOLDER_NAME!\requirements.txt" > "!FOLDER_NAME!\req_no_dlib.txt"
+            "%PYTHON_EXE%" -I -m pip install -r "!FOLDER_NAME!\req_no_dlib.txt" %PIP_INDEX% %PIP_OPTS%
+            del "!FOLDER_NAME!\req_no_dlib.txt"
         ) else (
             echo %GREEN%[+] Installing requirements for !FOLDER_NAME!...%RESET%
             "%PYTHON_EXE%" -I -m pip install -r "!FOLDER_NAME!\requirements.txt" %PIP_INDEX% %PIP_OPTS%
@@ -94,14 +107,18 @@ for %%i in (%NODES%) do (
 cd /d "%~dp0"
 
 echo.
-echo %CYAN%[+] Forcing final NumPy version 2.4.3...%RESET%
-"%PYTHON_EXE%" -I -m pip install numpy==2.4.3 --force-reinstall %PIP_OPTS%
+echo %CYAN%[+] Restoring ONNX Runtime GPU to prevent CPU-override...%RESET%
+"%PYTHON_EXE%" -I -m pip install onnxruntime-gpu==1.24.4 --force-reinstall %PIP_OPTS%
+
+echo.
+echo %CYAN%[+] Forcing final NumPy version 2.4.4...%RESET%
+"%PYTHON_EXE%" -I -m pip install numpy==2.4.4 --force-reinstall %PIP_OPTS%
 
 echo.
 echo %CYAN%[+] Making run.bat...%RESET%
 (
 echo @echo off
-echo python_embeded\python.exe -s -W ignore::FutureWarning ComfyUI\main.py --windows-standalone-build --disable-api-nodes --use-sage-attention
+echo .\python_embeded\python.exe -s -W ignore::FutureWarning .\ComfyUI\main.py --windows-standalone-build --disable-api-nodes --use-sage-attention
 echo pause
 ) > run.bat
 
@@ -121,7 +138,7 @@ echo pause
 
 :: extra model paths setup
 echo.
-echo %CYAN%[+] Would you like to link an existing ComfyUI model folder?%RESET%
+echo %YELLOW%[+] Would you like to link an existing ComfyUI model folder?%RESET%
 set /p "LINK_MODELS=Enter 'y' for Yes or press Enter to skip:"
 
 if /i "%LINK_MODELS%"=="y" (
