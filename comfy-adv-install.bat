@@ -1,14 +1,14 @@
 @echo off&&cd /d "%~dp0"
 
-Title The 3-Minute Node ComfyUI Advanced Installer v0.6 260422
+Title The 3-Minute Node ComfyUI Advanced Installer v0.7 260810
 :: The 3-Minute Node Community Edition
-:: align with comfyui_windows_portable_nvidia 0.19.3
+:: align with comfyui_windows_portable_nvidia 0.31.0
 
 setlocal enabledelayedexpansion
 
 call :set_colors
 
-set "PYTHON_URL=https://www.python.org/ftp/python/3.13.12/python-3.13.12-embed-amd64.zip"
+set "PYTHON_URL=https://www.python.org/ftp/python/3.13.14/python-3.13.14-embed-amd64.zip"
 set "TRITON_LIBS_URL=https://github.com/woct0rdho/triton-windows/releases/download/v3.0.0-windows.post1/python_3.13.2_include_libs.zip"
 set "CUBLAS_URL=https://huggingface.co/datasets/the3minutenode/comfy-install/resolve/main"
 set "EMBED_DIR=%~dp0python_embeded"
@@ -60,8 +60,8 @@ echo %CYAN%[+] Installing ComfyUI Base Dependencies...%RESET%
 "%PYTHON_EXE%" -I -m pip install -r "%COMFY_DIR%\requirements.txt" %PIP_OPTS%
 
 echo %CYAN%[+] Installing LOCKED PyTorch CUDA 13.0 (Working Version)...%RESET%
-"%PYTHON_EXE%" -I -m pip install torch==2.11.0+cu130 torchvision==0.26.0+cu130 torchaudio==2.11.0+cu130 --force-reinstall %PIP_INDEX% %PIP_OPTS%
-:: "%PYTHON_EXE%" -I -m pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu130
+"%PYTHON_EXE%" -I -m pip install torch==2.13.0+cu130 torchvision==0.28.0+cu130 torchaudio==2.11.0+cu130 --force-reinstall %PIP_INDEX% %PIP_OPTS%
+REM "%PYTHON_EXE%" -I -m pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu130
 
 echo %CYAN%[+] Installing Specialized Dependencies...%RESET%
 echo %CYAN%[+] Installing Insightface...%RESET%
@@ -74,34 +74,59 @@ echo %CYAN%[+] Installing Triton for Windows...%RESET%
 "%PYTHON_EXE%" -I -m pip install triton-windows==3.5.1.post24 %PIP_OPTS%
 
 echo %CYAN%[+] Installing SageAttention...%RESET%
-"%PYTHON_EXE%" -I -m pip install https://github.com/woct0rdho/SageAttention/releases/download/v2.2.0-windows.post4/sageattention-2.2.0+cu130torch2.9.0andhigher.post4-cp39-abi3-win_amd64.whl %PIP_OPTS%
+"%PYTHON_EXE%" -I -m pip install https://github.com/woct0rdho/SageAttention/releases/download/v2.2.0-windows.post6/sageattention-2.2.0+cu130torch2.10.0andhigher.post6-cp310-abi3-win_amd64.whl %PIP_OPTS%
+REM "%PYTHON_EXE%" -I -m pip install https://github.com/woct0rdho/SageAttention/releases/download/v2.2.0-windows.post4/sageattention-2.2.0+cu130torch2.9.0andhigher.post4-cp39-abi3-win_amd64.whl %PIP_OPTS%
 
 echo %CYAN%[+] Installing Custom Nodes...%RESET%
-set "NODES=https://github.com/ltdrdata/ComfyUI-Manager https://github.com/rgthree/rgthree-comfy https://github.com/yolain/ComfyUI-Easy-Use https://github.com/kijai/ComfyUI-KJNodes https://github.com/BobRandomNumber/ComfyUI-Crystools-MonitorOnly https://github.com/city96/ComfyUI-GGUF https://github.com/ltdrdata/ComfyUI-Impact-Pack https://github.com/ltdrdata/ComfyUI-Impact-Subpack https://github.com/numz/ComfyUI-SeedVR2_VideoUpscaler https://github.com/cubiq/ComfyUI_IPAdapter_plus https://github.com/stavsap/comfyui-kokoro https://github.com/stavsap/comfyui-ollama https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch https://github.com/cubiq/ComfyUI_FaceAnalysis https://github.com/Fannovel16/comfyui_controlnet_aux"
+:: Create nodes.txt with default values if it's missing
+if not exist "%~dp0nodes.txt" (
+    echo %YELLOW%[+] nodes.txt not found. Creating default...%RESET%
+    (
+        echo https://github.com/ltdrdata/ComfyUI-Manager
+		echo https://github.com/ltdrdata/ComfyUI-Impact-Pack
+        echo https://github.com/ltdrdata/ComfyUI-Impact-Subpack
+        echo https://github.com/rgthree/rgthree-comfy
+        echo https://github.com/yolain/ComfyUI-Easy-Use
+        echo https://github.com/kijai/ComfyUI-KJNodes
+        echo https://github.com/BobRandomNumber/ComfyUI-Crystools-MonitorOnly
+        echo https://github.com/city96/ComfyUI-GGUF
+        echo https://github.com/numz/ComfyUI-SeedVR2_VideoUpscaler
+		echo https://github.com/cubiq/ComfyUI_FaceAnalysis
+        echo https://github.com/stavsap/comfyui-kokoro
+        echo https://github.com/stavsap/comfyui-ollama
+        echo https://github.com/Fannovel16/comfyui_controlnet_aux
+        echo https://github.com/ClownsharkBatwing/RES4LYF
+		echo https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite
+		echo https://github.com/geroldmeisinger/ComfyUI-outputlists-combiner
+		echo https://github.com/lbouaraba/comfyui-krea2edit
+    ) > "%~dp0nodes.txt"
+)
 
 cd /d "%COMFY_DIR%\custom_nodes"
-for %%i in (%NODES%) do (
-    set "URL=%%i"
-    for /f "delims=" %%a in ("%%i") do set "FOLDER_NAME=%%~na"
-    echo.
-    echo %GREEN%[+] Processing: !FOLDER_NAME!%RESET%
-    if not exist "!FOLDER_NAME!" (
-        git clone !URL!
-    )
-    if exist "!FOLDER_NAME!\requirements.txt" (
-		if "!FOLDER_NAME!"=="comfyui-kokoro" (
-            echo %YELLOW%[+] Skipping requirements for comfyui-kokoro%RESET%
-        ) else if "!FOLDER_NAME!"=="ComfyUI_FaceAnalysis" (
-            echo %YELLOW%[+] Filtering dlib from requirements...%RESET%
-            :: Create a temp requirements file without dlib
-            findstr /V /I "dlib" "!FOLDER_NAME!\requirements.txt" > "!FOLDER_NAME!\req_no_dlib.txt"
-            "%PYTHON_EXE%" -I -m pip install -r "!FOLDER_NAME!\req_no_dlib.txt" %PIP_INDEX% %PIP_OPTS%
-            del "!FOLDER_NAME!\req_no_dlib.txt"
-        ) else (
-            echo %GREEN%[+] Installing requirements for !FOLDER_NAME!...%RESET%
-            "%PYTHON_EXE%" -I -m pip install -r "!FOLDER_NAME!\requirements.txt" %PIP_INDEX% %PIP_OPTS%
-        )
-    )
+for /f "tokens=*" %%g in ('type "%~dp0nodes.txt"') do (
+    for %%i in (%%g) do (
+		set "URL=%%i"
+		for /f "delims=" %%a in ("%%i") do set "FOLDER_NAME=%%~na"
+		echo.
+		echo %GREEN%[+] Processing: !FOLDER_NAME!%RESET%
+		if not exist "!FOLDER_NAME!" (
+			git clone !URL!
+		)
+		if exist "!FOLDER_NAME!\requirements.txt" (
+			if "!FOLDER_NAME!"=="comfyui-kokoro" (
+				echo %YELLOW%[+] Skipping requirements for comfyui-kokoro%RESET%
+			) else if "!FOLDER_NAME!"=="ComfyUI_FaceAnalysis" (
+				echo %YELLOW%[+] Filtering dlib from requirements...%RESET%
+				:: Create a temp requirements file without dlib
+				findstr /V /I "dlib" "!FOLDER_NAME!\requirements.txt" > "!FOLDER_NAME!\req_no_dlib.txt"
+				"%PYTHON_EXE%" -I -m pip install -r "!FOLDER_NAME!\req_no_dlib.txt" %PIP_INDEX% %PIP_OPTS%
+				del "!FOLDER_NAME!\req_no_dlib.txt"
+			) else (
+				echo %GREEN%[+] Installing requirements for !FOLDER_NAME!...%RESET%
+				"%PYTHON_EXE%" -I -m pip install -r "!FOLDER_NAME!\requirements.txt" %PIP_INDEX% %PIP_OPTS%
+			)
+		)
+	)
 )
 
 cd /d "%~dp0"
@@ -111,8 +136,8 @@ echo %CYAN%[+] Restoring ONNX Runtime GPU to prevent CPU-override...%RESET%
 "%PYTHON_EXE%" -I -m pip install onnxruntime-gpu==1.24.4 --force-reinstall %PIP_OPTS%
 
 echo.
-echo %CYAN%[+] Forcing final NumPy version 2.4.4...%RESET%
-"%PYTHON_EXE%" -I -m pip install numpy==2.4.4 --force-reinstall %PIP_OPTS%
+echo %CYAN%[+] Forcing final NumPy version 2.5.1...%RESET%
+"%PYTHON_EXE%" -I -m pip install numpy==2.5.1 --force-reinstall %PIP_OPTS%
 
 echo.
 echo %CYAN%[+] Making run.bat...%RESET%
