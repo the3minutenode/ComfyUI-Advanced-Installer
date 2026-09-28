@@ -1,8 +1,8 @@
 @echo off&&cd /d "%~dp0"
 
-Title The 3-Minute Node ComfyUI Advanced Installer v0.7 260810
+Title The 3-Minute Node ComfyUI Advanced Installer v0.8 260928
 :: The 3-Minute Node Community Edition
-:: align with comfyui_windows_portable_nvidia 0.31.0
+:: align with comfyui_windows_portable_nvidia 0.37.0
 
 setlocal enabledelayedexpansion
 
@@ -77,14 +77,15 @@ echo %CYAN%[+] Installing SageAttention...%RESET%
 "%PYTHON_EXE%" -I -m pip install https://github.com/woct0rdho/SageAttention/releases/download/v2.2.0-windows.post6/sageattention-2.2.0+cu130torch2.10.0andhigher.post6-cp310-abi3-win_amd64.whl %PIP_OPTS%
 REM "%PYTHON_EXE%" -I -m pip install https://github.com/woct0rdho/SageAttention/releases/download/v2.2.0-windows.post4/sageattention-2.2.0+cu130torch2.9.0andhigher.post4-cp39-abi3-win_amd64.whl %PIP_OPTS%
 
+echo %CYAN%[+] Installing FlashAttention...%RESET%
+"%PYTHON_EXE%" -I -m pip install https://github.com/mjun0812/flash-attention-prebuild-wheels/releases/download/v0.9.52/flash_attn-2.8.3+cu130torch2.13-cp313-cp313-win_amd64.whl %PIP_OPTS%
+
 echo %CYAN%[+] Installing Custom Nodes...%RESET%
 :: Create nodes.txt with default values if it's missing
 if not exist "%~dp0nodes.txt" (
     echo %YELLOW%[+] nodes.txt not found. Creating default...%RESET%
     (
         echo https://github.com/ltdrdata/ComfyUI-Manager
-		echo https://github.com/ltdrdata/ComfyUI-Impact-Pack
-        echo https://github.com/ltdrdata/ComfyUI-Impact-Subpack
         echo https://github.com/rgthree/rgthree-comfy
         echo https://github.com/yolain/ComfyUI-Easy-Use
         echo https://github.com/kijai/ComfyUI-KJNodes
@@ -136,8 +137,8 @@ echo %CYAN%[+] Restoring ONNX Runtime GPU to prevent CPU-override...%RESET%
 "%PYTHON_EXE%" -I -m pip install onnxruntime-gpu==1.24.4 --force-reinstall %PIP_OPTS%
 
 echo.
-echo %CYAN%[+] Forcing final NumPy version 2.5.1...%RESET%
-"%PYTHON_EXE%" -I -m pip install numpy==2.5.1 --force-reinstall %PIP_OPTS%
+echo %CYAN%[+] Forcing final NumPy version 2.5.2...%RESET%
+"%PYTHON_EXE%" -I -m pip install numpy==2.5.2 --force-reinstall %PIP_OPTS%
 
 echo.
 echo %CYAN%[+] Making run.bat...%RESET%
