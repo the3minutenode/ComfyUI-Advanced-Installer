@@ -6,7 +6,6 @@ One-click portable ComfyUI for Windows. Python 3.13, CUDA 13, SageAttention. Eve
 [![GitHub Release Date](https://img.shields.io/github/release-date/the3minutenode/ComfyUI-Advanced-Installer)](https://github.com/the3minutenode/ComfyUI-Advanced-Installer/releases/latest)
 [![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/the3minutenode/ComfyUI-Advanced-Installer/total)](https://github.com/the3minutenode/ComfyUI-Advanced-Installer/releases/latest)
 [![Discord](https://img.shields.io/discord/1431137394056233030?label=discord&logo=discord&logoColor=white)](https://discord.com/invite/wDn7cj68gm)
-[![YouTube Channel Subscribers](https://img.shields.io/youtube/channel/subscribers/UC8ZKAaWoHYLy58Y6dmypHqg?label=YouTube%20Subscribers)](https://www.youtube.com/@The3MinuteNode)
 
 ⚠️ **Official version:** the original repository is `the3minutenode/ComfyUI-Advanced-Installer`. Copies on other accounts are forks.
 
@@ -23,7 +22,7 @@ v0.8 worked for months, but its pip installs were slow. v1.0 uses [uv](https://g
 
 ## First install
 
-1. Create an empty folder, for example `C:\AI\ComfyUI`.
+1. Create an empty folder, for example `C:\AI`.
 2. Download `comfy-adv-install.bat` from the [latest release](https://github.com/the3minutenode/ComfyUI-Advanced-Installer/releases/latest) into it.
 3. Optional: put a `nodes.txt` next to it to choose your own custom nodes (see [Custom nodes](#custom-nodes)).
 4. Double-click `comfy-adv-install.bat`.
