@@ -1,0 +1,2 @@
+# Keep .bat files byte-for-byte (CRLF). cmd can mis-run LF-only batch files.
+*.bat -text
